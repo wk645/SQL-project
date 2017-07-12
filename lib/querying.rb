@@ -1,8 +1,11 @@
 def selects_guests_names_from_guests_for_any_episode
-"SELECT guests.name
+"SELECT DISTINCT guests.name
 FROM guests
 INNER JOIN show_guests
-ON guests.id = show_guests.guests_id;"
+ON guests.id = show_guests.guests_id
+INNER JOIN shows
+ON shows.id = show_guests.shows_id
+WHERE shows.show = ?;"
 end
 
 def selects_guests_occupations_which_were_most_popular
@@ -13,7 +16,11 @@ ORDER BY COUNT(occupation) DESC LIMIT 1;"
 end
 
 def selects_guests_names_which_had_the_most_appearances
-"SELECT name FROM guests GROUP BY name ORDER BY COUNT(name) DESC LIMIT 1;"
+"SELECT guests.name 
+FROM guests 
+INNER JOIN show_guests
+ON guests.id = show_guests.guests_id
+GROUP BY name ORDER BY COUNT(name) DESC LIMIT 1;"
 end
 
 def selects_the_average_number_of_guests_per_year_for_the_years_listed
@@ -26,5 +33,5 @@ end
 def selects_guests_names_for_a_given_occupation_that_match
 "SELECT DISTINCT guests.name
 FROM guests
-WHERE occupation = 'Comedian';"
+WHERE occupation = ?;"
 end

@@ -1,4 +1,4 @@
-# require_relative "../daily_show.rb"
+require_relative "../daily_show.rb"
 require_relative "sql_runner"
 require_relative '../lib/querying'
 
